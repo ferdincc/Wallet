@@ -2,7 +2,7 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
 const NODE_BACKEND_PORT = process.env.NODE_BACKEND_PORT || '3010'
-const nodeTarget = `http://127.0.0.1:${NODE_BACKEND_PORT}`
+const nodeTarget = 'https://wallet-lsk0.onrender.com'
 
 export default defineConfig({
   plugins: [react()],
@@ -27,11 +27,11 @@ export default defineConfig({
         changeOrigin: true,
       },
       '/api': {
-        target: 'http://127.0.0.1:8000',
+        target: 'https://wallet-lsk0.onrender.com',
         changeOrigin: true,
       },
       '/ws': {
-        target: 'ws://127.0.0.1:8000',
+        target: 'wss://wallet-lsk0.onrender.com',
         ws: true,
       },
       '/node-backend': {
@@ -42,4 +42,3 @@ export default defineConfig({
     },
   },
 })
-
