@@ -1,0 +1,1 @@
+# Localized API strings

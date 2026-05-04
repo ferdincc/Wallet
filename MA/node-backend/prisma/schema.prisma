@@ -1,0 +1,34 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL") // Örn: "file:./backtest.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model PriceData {
+  id        Int      @id @default(autoincrement())
+  symbol    String
+  timestamp DateTime
+  open      Float
+  high      Float
+  low       Float
+  close     Float
+  volume    Float
+
+  @@unique([symbol, timestamp])
+}
+
+model ModelPrediction {
+  id                Int       @id @default(autoincrement())
+  symbol            String
+  model_name        String
+  prediction_date   DateTime
+  predicted_price   Float
+  actual_price      Float?
+  mape              Float?
+  direction_correct Boolean?
+  created_at        DateTime  @default(now())
+}
+

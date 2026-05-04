@@ -1,0 +1,16 @@
+{
+  "name": "okyiss",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently -n \"node,web,api\" -c \"cyan,magenta,green\" \"npm run dev --prefix node-backend\" \"npm run dev --prefix frontend\" \"npm run dev:api\"",
+    "start": "npm run dev",
+    "serve": "npm run dev",
+    "dev:api": "node scripts/dev-api.js",
+    "dev:Api": "npm run dev:api",
+    "dev:node": "npm run dev --prefix node-backend",
+    "dev:web": "npm run dev --prefix frontend"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}

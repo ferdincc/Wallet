@@ -1,0 +1,378 @@
+"""
+Agent-facing user strings (English only — UI / API locale fixed to en).
+"""
+from __future__ import annotations
+
+from typing import Any, Dict, List, Optional
+
+
+def resolve_lang(locale: Optional[str], query: str) -> str:
+    """Uygulama İngilizce; ajan tarafı metinler her zaman İngilizce."""
+    return "en"
+
+
+def _get(lang: str, key: str) -> str:
+    return STRINGS.get(lang, STRINGS["en"]).get(key, STRINGS["en"][key])
+
+
+def tx(lang: str, key: str, **kwargs: Any) -> str:
+    return _get(lang, key).format(**kwargs)
+
+
+def recommendation_label(lang: str, code: str) -> str:
+    """Display label for internal AL / SAT / NÖTR recommendation codes."""
+    c = (code or "").strip().upper()
+    if c == "AL":
+        return tx(lang, "rec_lbl_al")
+    if c == "SAT":
+        return tx(lang, "rec_lbl_sat")
+    return tx(lang, "rec_lbl_neutral")
+
+
+STRINGS: Dict[str, Dict[str, str]] = {
+    "en": {
+        "price_line": "📊 {symbol}\nPrice: ${price}\n24h change: {ch}%\nVolume (24h): ${vol}",
+        "sentiment_title": "📰 {symbol} Sentiment analysis\n\n",
+        "overall_sentiment": "Overall sentiment",
+        "score": "Score",
+        "confidence": "Confidence",
+        "sample_size": "Sample size",
+        "sources_n": "\n📚 Sources ({n}):\n",
+        "pred_title": "🔮 {symbol} Price forecast (7 days)\n\n",
+        "current_price": "Current price",
+        "pred_price_7d": "Predicted price (7 days ahead)",
+        "expected_change": "Expected change",
+        "model_metrics": "Model metrics",
+        "mape_line": "- MAPE: {v:.2f}%\n",
+        "dir_acc_line": "- Directional accuracy: {v:.2f}%\n",
+        "first_3_days": "First 3 daily forecasts:\n",
+        "analysis_failed": "❌ Technical analysis could not be completed for {symbol}. Please try again.",
+        "symbol_default_btc": "⚠️ No symbol specified; analyzing BTC/USDT.\n\n",
+        "comprehensive_title": "🔍 {symbol} Full market analysis\n",
+        "section1_ta": "📊 1. TECHNICAL ANALYSIS (Market analyst)\n",
+        "section2_sent": "📰 2. SENTIMENT ANALYSIS (News & sentiment)\n",
+        "section3_pred": "🔮 3. PRICE FORECAST (7 days)\n",
+        "section4_risk": "⚠️ 4. RISK ASSESSMENT (Risk officer)\n",
+        "section5_vote": "🗳️ 5. INTER-AGENT VOTE (Consensus)\n",
+        "section6_trade": "💼 6. TRADING SUGGESTION (Portfolio manager)\n",
+        "current_price_short": "Current price",
+        "change_24h": "24h change",
+        "rsi_line": "RSI (14): {rsi:.2f} - {status}",
+        "macd_line": "MACD: {m:.4f} (Signal: {s:.4f})\nTrend: {trend}\n",
+        "trade_signals": "Trading signals",
+        "source_count": "Source count: {n} (news, Reddit, social)\n",
+        "pred_price_line": "Predicted price: ${p:,.2f}\n",
+        "exp_chg_line": "Expected change: {pct:+.2f}%\n",
+        "model_acc": "Model accuracy (directional): {acc:.2f}%\n",
+        "mae_line": "MAE: {v:.4f}\n",
+        "risk_score": "Risk score",
+        "warnings": "Warnings",
+        "no_major_risk": "No major risks flagged.\n",
+        "consensus": "Consensus",
+        "confidence_pct": "Confidence",
+        "disagreement_title": "\n⚠️ DISAGREEMENT\n",
+        "disagreement_body": "   Agents disagree; staying on the sidelines may be prudent.\n",
+        "majority_ok": "\n✅ MAJORITY ALIGNMENT\n",
+        "majority_body": "   Most agents share the same view.\n",
+        "vote_line": "{icon} {agent}: {vote} (confidence: {conf:.0f}%)\n",
+        "recommendation": "Suggestion",
+        "rationale": "Rationale",
+        "not_advice": "💡 Note: Not financial advice. Do your own research.\n",
+        "user_profile": "👤 User profile",
+        "conf_score_need": "   Confidence score: {a:.1f}% (required: {b:.0f}%)\n\n",
+        "rec_line": "Suggestion: {rec}\n",
+        "rec_reason": "Rationale: {txt}\n",
+        "news_latest": "📰 {label}Latest news\n\n",
+        "untitled": "Untitled",
+        "sentiment_line": "   Sentiment: {s}\n",
+        "summary_prefix": "📊 Overall sentiment mix: ",
+        "no_data": "No data.\n",
+        "news_footer": "\nUse the News page for the full list.",
+        "news_fail": "📰 News could not be loaded: {err}. Try the News page.",
+        "campaign_fail": "Campaign information unavailable.",
+        "wallet_fail": "Could not build wallet response.",
+        "wallet_snapshot_headline": "Wallet analysis (OKYiSS Wallet module snapshot):",
+        "wallet_node_headline": "Wallet analysis (multi-chain data from OKYiSS node):",
+        "wallet_need_address_or_module": (
+            "I need a 0x address or data from the Wallet analysis page. "
+            "Ensure the node backend has ETHERSCAN_API_KEY for live chain data."
+        ),
+        "rsi_overbought": "Overbought",
+        "rsi_oversold": "Oversold",
+        "rsi_normal": "Normal",
+        "macd_up": "Bullish",
+        "macd_down": "Bearish",
+        "bb_upper": "Upper",
+        "bb_mid": "Middle",
+        "bb_lower": "Lower",
+        "bb_above": "Price above upper band (overbought)",
+        "bb_below": "Price below lower band (oversold)",
+        "bb_normal": "Within normal range",
+        "status_lbl": "Status",
+        "analyze_title": "📈 {symbol} Detailed market analysis\n",
+        "current_price_info": "💰 Current price\n",
+        "price_lbl": "   Price",
+        "high24": "   24h high",
+        "low24": "   24h low",
+        "ch24": "   24h change",
+        "vol24": "   24h volume",
+        "tech_indicators": "📊 Technical indicators\n",
+        "macd_hdr": "   MACD",
+        "signal_lbl": "   Signal",
+        "hist_lbl": "   Histogram",
+        "bb_hdr": "   Bollinger Bands\n",
+        "sma20": "   SMA (20)",
+        "sma50": "   SMA (50)",
+        "ema12": "   EMA (12)",
+        "trade_sig_hdr": "\n🚦 Trading signals\n",
+        "ai_summary": "\n💡 AI summary\n",
+        "chg24h": "\n📉 24h change: {p:.2f}%\n",
+        "rec_lbl_al": "BUY",
+        "rec_lbl_sat": "SELL",
+        "rec_lbl_neutral": "HOLD",
+        "recommend_disagree": "⚠️ Agents disagree; proceed with caution.",
+        "recommend_consensus": "✅ Consensus: {vote_count}/{total_votes} agents voted {vote}",
+        "recommend_tech_buy": "Technical analysis suggests a buy signal",
+        "recommend_tech_sell": "Technical analysis suggests a sell signal",
+        "recommend_sent_pos": "Positive sentiment",
+        "recommend_sent_neg": "Negative sentiment",
+        "recommend_pred_rise": "Forecasted upside: {pct:+.2f}%",
+        "recommend_pred_drop": "Forecasted downside: {pct:+.2f}%",
+        "comprehensive_query_inline": "{symbol} full market analysis",
+        "pt_title": "💼 {symbol} Trade suggestion (Portfolio manager)\n",
+        "pt_buy_hdr": "✅ BUY RECOMMENDATION\n\n",
+        "pt_sell_hdr": "❌ SELL RECOMMENDATION\n\n",
+        "pt_neutral_hdr": "⏸️ HOLD — No trade suggested at the moment\n\n",
+        "pt_sample_trade": "Sample trade:\n",
+        "pt_symbol": "  • Symbol: {symbol}\n",
+        "pt_type_buy": "  • Type: BUY\n",
+        "pt_amount_hint": "  • Amount: Set according to your portfolio balance\n",
+        "paper_trading_hint": "For paper trading, use the '/simulation' page.\n",
+        "pt_need_symbol": "Specify a coin symbol for a trade suggestion.",
+        "ps_title": "💼 Portfolio status\n",
+        "ps_portfolio": "Portfolio: {name}\n",
+        "ps_initial": "Starting balance: ${v:,.2f}\n",
+        "ps_current": "Current balance: ${v:,.2f}\n",
+        "ps_pos_value": "Total position value: ${v:,.2f}\n",
+        "ps_total_value": "Total portfolio value: ${v:,.2f}\n",
+        "ps_total_change": "Total change: {pct:+.2f}%\n\n",
+        "ps_positions": "Positions ({n}):\n",
+        "ps_pos_line": "  • {symbol}: {qty:.4f} @ ${price:,.2f}\n",
+        "ps_pl_line": "    Value: ${val:,.2f} | P/L: ${pnl:+,.2f} ({pnlpct:+.2f}%)\n",
+        "ps_risk": "\n⚠️ Risk warnings:\n",
+        "ps_none": "No portfolio found. You can create one with '/portfolio create'.",
+        "ps_login": "You need to be signed in to view your portfolio.",
+        "bt_title": "🧪 Last 90 days backtest for {symbol}\n",
+        "bt_best": "🏆 Best performer: **{model}**\n",
+        "bt_dir_acc": "- Directional accuracy: {pct:.1f}%\n",
+        "bt_mape": "- Average MAPE: {pct:.2f}%\n",
+        "bt_fail": "❌ Backtest could not be run: {err}",
+        "news_sent_pos": "{pct}% positive",
+        "news_sent_neu": "{pct}% neutral",
+        "news_sent_neg": "{pct}% negative",
+        "chat_error_fallback_prefix": "I couldn't run this analysis fully; replying with general information.\n\n",
+        "chat_mode_llm_unavailable_full": (
+            "Free chat is currently unavailable.\n\n"
+            "1) Groq (recommended): free key at https://console.groq.com — set environment variable GROQ_API_KEY "
+            "and run: pip install groq (Python SDK).\n"
+            "2) Ollama (fully local): https://ollama.com — run `ollama pull llama3`, listen on http://127.0.0.1:11434\n"
+            "3) Google Gemini: set GEMINI_API_KEY — pip install google-generativeai\n\n"
+            "Restart the API after changing keys.\n\n"
+            "For prices or analysis try e.g. «BTC price» or «ETH analysis»."
+        ),
+        "mem_macd_bull": "MACD bullish bias",
+        "mem_macd_bear": "MACD bearish bias",
+        "mem_signals": "Signals",
+        "mem_limited": "Limited technical summary for {symbol}.",
+        "mem_consensus": "Consensus: {cons}",
+        "final_rec_prefix": "Final suggestion: {rec}",
+        "final_rec_reason_default": "Synthesized analysis from all agents",
+    },
+    "tr": {
+        "price_line": "📊 {symbol}\nFiyat: ${price}\n24s Değişim: {ch}%\nHacim (24s): ${vol}",
+        "sentiment_title": "📰 {symbol} Sentiment Analizi\n\n",
+        "overall_sentiment": "Genel Sentiment",
+        "score": "Skor",
+        "confidence": "Güven",
+        "sample_size": "Örnek Sayısı",
+        "sources_n": "\n📚 Kaynaklar ({n}):\n",
+        "pred_title": "🔮 {symbol} Fiyat Tahmini (7 Gün)\n\n",
+        "current_price": "Mevcut Fiyat",
+        "pred_price_7d": "Tahmin Edilen Fiyat (7 gün sonra)",
+        "expected_change": "Beklenen Değişim",
+        "model_metrics": "Model Metrikleri",
+        "mape_line": "- MAPE: {v:.2f}%\n",
+        "dir_acc_line": "- Yön Doğruluğu: {v:.2f}%\n",
+        "first_3_days": "İlk 3 Gün Tahminleri:\n",
+        "analysis_failed": "❌ {symbol} için teknik analiz yapılamadı. Lütfen tekrar deneyin.",
+        "symbol_default_btc": "⚠️ Sembol belirtilmedi, BTC/USDT için analiz yapıyorum.\n\n",
+        "comprehensive_title": "🔍 {symbol} Kapsamlı Piyasa Analizi\n",
+        "section1_ta": "📊 1. TEKNİK ANALİZ (Piyasa Analisti)\n",
+        "section2_sent": "📰 2. SENTIMENT ANALİZİ (Haber-Sentiment Uzmanı)\n",
+        "section3_pred": "🔮 3. FİYAT TAHMİNİ (Tahminci - 7 Gün)\n",
+        "section4_risk": "⚠️ 4. RİSK DEĞERLENDİRMESİ (Risk Kontrolörü)\n",
+        "section5_vote": "🗳️ 5. AJANLAR ARASI OYLAMA (Konsensüs)\n",
+        "section6_trade": "💼 6. TRADİNG ÖNERİSİ (Portföy Yöneticisi)\n",
+        "current_price_short": "Mevcut Fiyat",
+        "change_24h": "24s Değişim",
+        "rsi_line": "RSI (14): {rsi:.2f} - {status}",
+        "macd_line": "MACD: {m:.4f} (Sinyal: {s:.4f})\nTrend: {trend}\n",
+        "trade_signals": "Trading Sinyalleri",
+        "source_count": "Kaynak Sayısı: {n} (haber, Reddit, sosyal medya)\n",
+        "pred_price_line": "Tahmin Edilen Fiyat: ${p:,.2f}\n",
+        "exp_chg_line": "Beklenen Değişim: {pct:+.2f}%\n",
+        "model_acc": "Model Doğruluğu: {acc:.2f}%\n",
+        "mae_line": "MAE: {v:.4f}\n",
+        "risk_score": "Risk Skoru",
+        "warnings": "Uyarılar",
+        "no_major_risk": "Önemli bir risk tespit edilmedi.\n",
+        "consensus": "Konsensüs",
+        "confidence_pct": "Güven",
+        "disagreement_title": "\n⚠️ FİKİR AYRILIĞI VAR!\n",
+        "disagreement_body": "   Ajanlar arasında fikir ayrılığı var, beklemede kalmanız önerilir.\n",
+        "majority_ok": "\n✅ ÇOĞUNLUK SAĞLANDI\n",
+        "majority_body": "   Ajanların çoğu aynı görüşte.\n",
+        "vote_line": "{icon} {agent}: {vote} (Güven: {conf:.0f}%)\n",
+        "recommendation": "Öneri",
+        "rationale": "Gerekçe",
+        "not_advice": "💡 Not: Bu öneriler yatırım tavsiyesi değildir. Kendi araştırmanızı yapın.\n",
+        "user_profile": "👤 Kullanıcı Profili",
+        "conf_score_need": "   Güven Skoru: {a:.1f}% (Gereken: {b:.0f}%)\n\n",
+        "rec_line": "Öneri: {rec}\n",
+        "rec_reason": "Gerekçe: {txt}\n",
+        "news_latest": "📰 {label}Son Haberler\n\n",
+        "untitled": "Başlıksız",
+        "sentiment_line": "   Sentiment: {s}\n",
+        "summary_prefix": "📊 Genel sentiment özeti: ",
+        "no_data": "Veri yok.\n",
+        "news_footer": "\nTüm haberler için Haberler sayfasını kullanabilirsiniz.",
+        "news_fail": "📰 Haberler şu an yüklenemedi: {err}. Lütfen Haberler sayfasından tekrar deneyin.",
+        "campaign_fail": "Kampanya bilgisi alınamadı.",
+        "wallet_fail": "Cüzdan yanıtı oluşturulamadı.",
+        "wallet_snapshot_headline": "Cüzdan analizi (OKYiSS Cüzdan modülü özeti):",
+        "wallet_node_headline": "Cüzdan analizi (OKYiSS node çok zincirli tarama):",
+        "wallet_need_address_or_module": (
+            "0x adresi veya Cüzdan sayfasında yapılmış bir analiz gerekiyor. "
+            "Canlı zincir verisi için node-backend .env içinde ETHERSCAN_API_KEY tanımlı olmalı."
+        ),
+        "rsi_overbought": "Aşırı Alım",
+        "rsi_oversold": "Aşırı Satım",
+        "rsi_normal": "Normal",
+        "macd_up": "Yükseliş",
+        "macd_down": "Düşüş",
+        "bb_upper": "Üst",
+        "bb_mid": "Orta",
+        "bb_lower": "Alt",
+        "bb_above": "Fiyat üst bandın üzerinde (Aşırı Alım)",
+        "bb_below": "Fiyat alt bandın altında (Aşırı Satım)",
+        "bb_normal": "Normal aralıkta",
+        "status_lbl": "Durum",
+        "analyze_title": "📈 {symbol} Detaylı Piyasa Analizi\n",
+        "current_price_info": "💰 Mevcut Fiyat Bilgileri:\n",
+        "price_lbl": "   Fiyat",
+        "high24": "   24s Yüksek",
+        "low24": "   24s Düşük",
+        "ch24": "   24s Değişim",
+        "vol24": "   24s Hacim",
+        "tech_indicators": "📊 Teknik Göstergeler:\n",
+        "macd_hdr": "   MACD",
+        "signal_lbl": "   Sinyal",
+        "hist_lbl": "   Histogram",
+        "bb_hdr": "   Bollinger Bands:\n",
+        "sma20": "   SMA (20)",
+        "sma50": "   SMA (50)",
+        "ema12": "   EMA (12)",
+        "trade_sig_hdr": "\n🚦 Trading Sinyalleri:\n",
+        "ai_summary": "\n💡 AI Analiz Özeti:\n",
+        "chg24h": "\n📉 24 Saatlik Değişim: {p:.2f}%\n",
+        "rec_lbl_al": "AL",
+        "rec_lbl_sat": "SAT",
+        "rec_lbl_neutral": "NÖTR",
+        "recommend_disagree": "⚠️ Ajanlar arasında fikir ayrılığı var, dikkatli olun",
+        "recommend_consensus": "✅ Konsensüs: {vote_count}/{total_votes} ajan {vote} oyu verdi",
+        "recommend_tech_buy": "Teknik analiz al sinyali veriyor",
+        "recommend_tech_sell": "Teknik analiz sat sinyali veriyor",
+        "recommend_sent_pos": "Pozitif sentiment",
+        "recommend_sent_neg": "Negatif sentiment",
+        "recommend_pred_rise": "Tahmin edilen yükseliş: {pct:+.2f}%",
+        "recommend_pred_drop": "Tahmin edilen düşüş: {pct:+.2f}%",
+        "comprehensive_query_inline": "{symbol} kapsamlı analiz",
+        "pt_title": "💼 {symbol} İşlem Önerisi (Portföy Yöneticisi)\n",
+        "pt_buy_hdr": "✅ AL ÖNERİSİ\n\n",
+        "pt_sell_hdr": "❌ SAT ÖNERİSİ\n\n",
+        "pt_neutral_hdr": "⏸️ NÖTR – Şu anda işlem önerilmiyor\n\n",
+        "pt_sample_trade": "Örnek İşlem:\n",
+        "pt_symbol": "  • Sembol: {symbol}\n",
+        "pt_type_buy": "  • İşlem Tipi: AL (BUY)\n",
+        "pt_amount_hint": "  • Miktar: Portföy bakiyenize göre belirleyin\n",
+        "paper_trading_hint": "Paper trading için '/simulation' sayfasını kullanabilirsiniz.\n",
+        "pt_need_symbol": "İşlem önerisi için bir coin sembolü belirtmeniz gerekiyor.",
+        "ps_title": "💼 Portföy Durumu\n",
+        "ps_portfolio": "Portföy: {name}\n",
+        "ps_initial": "Başlangıç Bakiyesi: ${v:,.2f}\n",
+        "ps_current": "Mevcut Bakiye: ${v:,.2f}\n",
+        "ps_pos_value": "Toplam Pozisyon Değeri: ${v:,.2f}\n",
+        "ps_total_value": "Toplam Portföy Değeri: ${v:,.2f}\n",
+        "ps_total_change": "Toplam Değişim: {pct:+.2f}%\n\n",
+        "ps_positions": "Pozisyonlar ({n}):\n",
+        "ps_pos_line": "  • {symbol}: {qty:.4f} @ ${price:,.2f}\n",
+        "ps_pl_line": "    Değer: ${val:,.2f} | P/L: ${pnl:+,.2f} ({pnlpct:+.2f}%)\n",
+        "ps_risk": "\n⚠️ Risk Uyarıları:\n",
+        "ps_none": "Portföy bulunamadı. Yeni bir portföy oluşturmak için '/portfolio create' komutunu kullanabilirsiniz.",
+        "ps_login": "Portföy sorgusu için giriş yapmanız gerekiyor.",
+        "bt_title": "🧪 {symbol} için Son 90 Gün Backtest\n",
+        "bt_best": "🏆 En iyi performans: **{model}**\n",
+        "bt_dir_acc": "- Yön doğruluğu: %{pct:.1f}\n",
+        "bt_mape": "- Ortalama MAPE: %{pct:.2f}\n",
+        "bt_fail": "❌ Backtest çalıştırılamadı: {err}",
+        "news_sent_pos": "%{pct} pozitif",
+        "news_sent_neu": "%{pct} nötr",
+        "news_sent_neg": "%{pct} negatif",
+        "chat_error_fallback_prefix": "Şu an bu analizi tam çalıştıramıyorum; genel bilgiyle yanıtlıyorum.\n\n",
+        "chat_mode_llm_unavailable_full": (
+            "Ücretsiz sohbet şu an kullanılamıyor.\n\n"
+            "1) Groq (önerilen): https://console.groq.com ücretsiz anahtar → ortam değişkeni GROQ_API_KEY → "
+            "`pip install groq`\n"
+            "2) Ollama (tamamen lokal): https://ollama.com kurun, `ollama pull llama3`, "
+            "servisin http://127.0.0.1:11434 adresinde çalıştığından emin olun.\n"
+            "3) Google Gemini: https://aistudio.google.com/apikey ile GEMINI_API_KEY → `pip install google-generativeai`\n\n"
+            "Anahtarları ayarladıktan sonra API sürecini yeniden başlatın.\n\n"
+            "Fiyat veya analiz için örnek: «BTC fiyat» veya «ETH analiz»."
+        ),
+        "mem_macd_bull": "MACD yükseliş eğilimi",
+        "mem_macd_bear": "MACD düşüş eğilimi",
+        "mem_signals": "Sinyaller",
+        "mem_limited": "{symbol} için teknik özet sınırlı.",
+        "mem_consensus": "Konsensüs: {cons}",
+        "final_rec_prefix": "Final Öneri: {rec}",
+        "final_rec_reason_default": "Tüm ajanların analizi sentezlendi",
+    },
+}
+
+
+def rsi_status_label(lang: str, rsi: float) -> str:
+    if rsi > 70:
+        return _get(lang, "rsi_overbought")
+    if rsi < 30:
+        return _get(lang, "rsi_oversold")
+    return _get(lang, "rsi_normal")
+
+
+def risk_warnings_for_comprehensive(lang: str) -> Dict[str, str]:
+    if lang == "en":
+        return {
+            "rsi_high": "Overbought zone — elevated pullback risk",
+            "rsi_low": "Oversold zone — potential bounce",
+            "bb_high": "Price above upper Bollinger band",
+            "bb_low": "Price below lower Bollinger band",
+            "sent_neg": "Negative sentiment — downside risk",
+            "pred_down": "Forecasted drop > 5%",
+        }
+    return {
+        "rsi_high": "Aşırı alım bölgesi - düzeltme riski yüksek",
+        "rsi_low": "Aşırı satım bölgesi - toparlanma potansiyeli",
+        "bb_high": "Fiyat üst Bollinger Band'ın üzerinde",
+        "bb_low": "Fiyat alt Bollinger Band'ın altında",
+        "sent_neg": "Negatif sentiment - düşüş riski",
+        "pred_down": "Tahmin edilen düşüş > %5",
+    }

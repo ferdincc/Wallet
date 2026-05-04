@@ -1,0 +1,28 @@
+{
+  "name": "okyiss-node-backend",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
+    "start": "node dist/server.js",
+    "build": "tsc",
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:generate": "prisma generate"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.2.1",
+    "alchemy-sdk": "^3.6.5",
+    "axios": "^1.7.9",
+    "dotenv": "^17.3.1",
+    "express": "^4.21.2",
+    "node-cache": "^5.1.2",
+    "rss-parser": "^3.13.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^22.10.2",
+    "prisma": "^6.2.1",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.7.3"
+  }
+}
